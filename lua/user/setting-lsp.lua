@@ -121,11 +121,6 @@ for _, lsp in pairs(servers) do
 	::skip::
 end
 
--- vim.lsp.enable(servers)
-
---[[ local configs = extend(lsp)
-vim.lsp.config("clangd", configs) ]]
-
 -- Other Settings
 
 -- Diagnostic Config
