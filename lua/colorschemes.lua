@@ -30,6 +30,12 @@ end
 
 function M.vscode()
 	local color = require("vscode.colors").get_colors()
+	local cicon_error = "#F44747"
+	local cicon_warn = "#DCDCAA"
+	local cicon_info = "#569CD6"
+	local cicon_hint = "#569CD6"
+	local cdark = "#0f0f0f"
+	local cdark_selected = "#1F1F1F"
 	require("vscode").setup({
 		-- Enable transparent background
 		transparent = false,
@@ -46,12 +52,40 @@ function M.vscode()
 		-- Override highlight groups (see ./lua/vscode/theme.lua)
 		group_overrides = {
 			Cursor = { fg = color.vscDarkBlue, bg = color.vscLightGreen, bold = true },
-			BufferLineFill = { bg = "#1E1E1E" },
+			BufferLineFill = { bg = cdark },
 			BufferLineIndicatorSelected = { fg = "#0A7ACA" },
-			BufferLineCloseButton = { bg = "#1e1e1e" },
-			BufferLineCloseButtonSelected = { bg = "#1E1E1E", bold = false },
-			BufferLineBackground = { bg = "#1E1E1E" },
-			BufferLineBufferSelected = { bold = true },
+			BufferLineCloseButton = { bg = cdark },
+			BufferLineCloseButtonSelected = { bg = cdark_selected, bold = false },
+			BufferLineBackground = { bg = cdark },
+			BufferLineBufferSelected = { bg = cdark_selected, bold = true },
+			BufferLineDevIconLua = { bg = cdark },
+			BufferLineDevIconLuaSelected = { bg = cdark_selected },
+			BufferLineOffsetSeparator = { bg = color.vscRed },
+
+			BufferLineSeparator = { bg = color.vscYellow },
+			BufferLineSeparatorVisible = { bg = color.vscYellow },
+			BufferLineSeparatorSelected = { bg = color.vscYellow },
+
+			-- Diagnostics
+			BufferlineError = { bg = cdark, fg = cicon_error }, -- Filename container
+			BufferlineErrorSelected = { bg = cdark_selected, fg = cicon_error, bold = true },
+			BufferlineErrorDiagnostic = { bg = cdark, fg = cicon_error }, -- Icon container
+			BufferlineErrorDiagnosticSelected = { bg = cdark_selected, fg = cicon_error, bold = true },
+
+			BufferlineWarning = { bg = cdark, fg = cicon_warn }, -- Filename container
+			BufferlineWarningSelected = { bg = cdark_selected, fg = cicon_warn, bold = true },
+			BufferlineWarningDiagnostic = { bg = cdark, fg = cicon_warn }, -- Icon container
+			BufferlineWarningDiagnosticSelected = { bg = cdark_selected, fg = cicon_warn, bold = true },
+
+			BufferlineHint = { bg = cdark, fg = cicon_hint }, -- Filename container
+			BufferlineHintSelected = { bg = cdark_selected, fg = cicon_hint, bold = true },
+			BufferlineHintDiagnostic = { bg = cdark, fg = cicon_hint }, -- Icon container
+			BufferlineHintDiagnosticSelected = { bg = cdark_selected, fg = cicon_hint, bold = true },
+
+			BufferlineInfo = { bg = cdark, fg = cicon_info }, -- Filename container
+			BufferlineInfoSelected = { bg = cdark_selected, fg = cicon_info, bold = true },
+			BufferlineInfoDiagnostic = { bg = cdark, fg = cicon_info }, -- Icon container
+			BufferlineInfoDiagnosticSelected = { bg = cdark_selected, fg = cicon_info, bold = true },
 		},
 	})
 
