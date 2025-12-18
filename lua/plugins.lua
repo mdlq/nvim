@@ -137,4 +137,5 @@ require("lazy").setup({
 		version = "1.*",
 		opts = {}, -- lazy.nvim will implicitly calls `setup {}`
 	},
+	{ "mg979/vim-visual-multi", branch = "master" },
 })
