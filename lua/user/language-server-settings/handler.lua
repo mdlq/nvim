@@ -12,7 +12,7 @@ local function definition_new_tab()
 		end
 
 		-- Normalize result (LSP can return a single Location or a list)
-		local target = vim.tbl_islist(result) and result[1] or result
+		local target = vim.islist(result) and result[1] or result
 		local target_uri = target.uri or target.targetUri
 		local current_uri = vim.uri_from_bufnr(0)
 
