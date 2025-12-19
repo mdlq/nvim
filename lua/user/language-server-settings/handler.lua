@@ -31,7 +31,8 @@ M.on_attach = function(client, bufnr)
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-	vim.keymap.set("n", "gd", definition_new_tab, bufopts)
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+	vim.keymap.set("n", "gT", definition_new_tab, bufopts)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
 	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
 	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
