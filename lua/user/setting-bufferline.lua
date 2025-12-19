@@ -31,18 +31,14 @@ require("bufferline").setup({
 		diagnostics = "nvim_lsp",
 		-- diagnostics_update_in_insert = true, # DEPRECATED
 		-- The diagnostics indicator can be set to nil to keep the buffer name highlight but delete the highlighting
-		diagnostics_indicator = function(_, level, _, _)
-			local icon = ""
-			if level:match("error") then
-				icon = "󰅚 "
-			elseif level:match("warning") then
-				icon = " "
-			elseif level:match("hint") then
-				icon = "󰌶 "
-			elseif level:match("info") then
-				icon = " "
+		diagnostics_indicator = function(_, level, d_dict, _)
+			local res = ""
+			for type, total in pairs(d_dict) do
+				local icon = type == "error" and "󰅙 "
+					or (type == "warning" and " " or (type == "info" and "󰋼 " or "󰌶 "))
+				res = res .. total .. icon
 			end
-			return icon
+			return res
 		end,
 		-- NOTE: this will be called a lot so don't do any heavy processing here
 		custom_filter = function(buf_number, buf_numbers)
