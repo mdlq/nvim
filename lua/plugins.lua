@@ -111,7 +111,6 @@ require("lazy").setup({
 			vim.fn["mkdp#util#install"]()
 		end,
 	},
-	"lewis6991/impatient.nvim",
 	"norcalli/nvim-colorizer.lua",
 	{ "michaelb/sniprun", branch = "master", build = "sh ./install.sh" },
 	{
