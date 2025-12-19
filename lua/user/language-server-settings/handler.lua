@@ -5,21 +5,25 @@ local lfunctions = require("functions").user
 local function definition_new_tab()
 	local params = vim.lsp.util.make_position_params(0, "utf-8")
 
-	vim.lsp.buf_request(0, "textDocument/definition", params, function(err, result, ctx, _)
+	vim.lsp.buf_request(0, "textDocument/definition", params, function(err, result, ctx, config)
 		if err or not result or vim.tbl_isempty(result) then
 			vim.notify("Definition not found", vim.log.levels.INFO)
 			return
 		end
 
-		-- Create a new tab
-		vim.cmd("tabedit")
+		-- Normalize result (LSP can return a single Location or a list)
+		local target = vim.tbl_islist(result) and result[1] or result
+		local target_uri = target.uri or target.targetUri
+		local current_uri = vim.uri_from_bufnr(0)
 
-		-- Result can be a single Location or a list (Location[] or LocationLink[])
-		local target = vim.islist(result) and result[1] or result
+		-- 1. Check if the location is in a different file
+		if target_uri ~= current_uri then
+			vim.cmd("tabedit")
+		end
 
-		-- The 0.11+ replacement for jump_to_location
-		-- show_document handles the buffer loading and cursor positioning
-		vim.lsp.util.show_document(target, "utf-16", { focus = true })
+		-- 2. Use show_document (the modern replacement for jump_to_location)
+		-- This handles converting the URI to a buffer and moving the cursor.
+		vim.lsp.util.show_document(target, "utf-8", { focus = true })
 	end)
 end
 
@@ -31,8 +35,7 @@ M.on_attach = function(client, bufnr)
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-	vim.keymap.set("n", "gT", definition_new_tab, bufopts)
+	vim.keymap.set("n", "gd", definition_new_tab, bufopts)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
 	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
 	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
