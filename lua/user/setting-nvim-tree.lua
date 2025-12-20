@@ -1,3 +1,28 @@
+local function get_center_config()
+	local screen_w = vim.opt.columns:get()
+	local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+
+	-- Define your desired window width and height ratios (e.g., 80% of screen)
+	local WIDTH_RATIO = 0.8
+	local HEIGHT_RATIO = 0.8
+
+	local window_w_int = math.floor(screen_w * WIDTH_RATIO)
+	local window_h_int = math.floor(screen_h * HEIGHT_RATIO)
+
+	-- Calculate top-left corner coordinates for centering
+	local center_x = (screen_w - window_w_int) / 2
+	local center_y = ((vim.opt.lines:get() - window_h_int) / 2) - vim.opt.cmdheight:get()
+
+	return {
+		border = "rounded", -- Optional: use "single", "double", "shadow", etc.
+		relative = "editor",
+		row = center_y,
+		col = center_x,
+		width = window_w_int,
+		height = window_h_int,
+	}
+end
+
 local function on_attach(bufnr)
 	local api = require("nvim-tree.api")
 
@@ -18,13 +43,18 @@ require("nvim-tree").setup({
 	sort_by = "name",
 	sync_root_with_cwd = false,
 	view = {
-		centralize_selection = false,
+		--[[ centralize_selection = false,
 		adaptive_size = false,
 		width = 40,
 		number = false,
 		relativenumber = false,
 		signcolumn = "yes",
-		side = "left",
+		side = "left", ]]
+		float = {
+			enable = true,
+			quit_on_focus_loss = true,
+			open_win_config = get_center_config,
+		},
 	},
 	git = {
 		enable = true,
