@@ -41,7 +41,7 @@ end
 require("nvim-tree").setup({
 	on_attach = on_attach,
 	sort_by = "name",
-	sync_root_with_cwd = false,
+	sync_root_with_cwd = true,
 	view = {
 		--[[ centralize_selection = false,
 		adaptive_size = false,
