@@ -42,6 +42,12 @@ require("nvim-tree").setup({
 	on_attach = on_attach,
 	sort_by = "name",
 	sync_root_with_cwd = true,
+	actions = {
+		change_dir = {
+			enable = true,
+			global = true, -- This makes <C-]> use :cd instead of :lcd
+		},
+	},
 	view = {
 		--[[ centralize_selection = false,
 		adaptive_size = false,
